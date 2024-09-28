@@ -4,6 +4,7 @@ import axios from "axios";
 import Plotly from "plotly.js-dist";
 import indiaGeoJson from "../constants/india_st.json"; // Adjust path as necessary
 import districtGeoJson from "../constants/india_ds.json"; // Adjust path as necessary
+import { useNavigate } from "react-router-dom";
 
 const EdaDashboard = () => {
   const [columnNames, setColumnNames] = useState([]);
@@ -17,6 +18,7 @@ const EdaDashboard = () => {
   const [zoomLevel, setZoomLevel] = useState(3);
   const [loading, setLoading] = useState(false); // Added loading state
   const [warning, setWarning] = useState(""); // Warning state
+  const navigate = useNavigate();
 
   const indianBorder = {
     color: "black",
@@ -40,7 +42,7 @@ const EdaDashboard = () => {
       );
 
     axios
-      .get("https://jaipur-district-geostats-backend.onrender.com/response_data.json")
+      .get("https://jaipur-district-geostats-backend.onrender.com/static/response_data.json")
       .then((response) => setColumnNames(response.data.columns))
       .catch((error) => console.error("Error fetching column names:", error));
   }, []);
@@ -167,18 +169,16 @@ const EdaDashboard = () => {
     }
   }, [plotData]);
 
+  const handlePageChange = () => {
+    navigate("/summary");
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 text-yellow-400 flex flex-col">
       <header className="p-4 bg-gray-800 flex items-center justify-between">
         <h1 className="text-xl font-bold text-yellow-500">EDA Dashboard</h1>
         <div className="flex">
-          <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-1 px-3 rounded-md mx-1">
-            View Map
-          </button>
-          <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-1 px-3 rounded-md mx-1">
-            View Plot
-          </button>
-          <button className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-1 px-3 rounded-md mx-1">
+          <button onClick={handlePageChange} className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-1 px-3 rounded-md mx-1">
             View Summary
           </button>
         </div>
