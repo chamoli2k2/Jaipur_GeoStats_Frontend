@@ -26,28 +26,28 @@ const EdaDashboard = () => {
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:5000/static/output_village.geojson")
+      .get("https://jaipur-district-geostats-backend.onrender.com/static/output_village.geojson")
       .then((response) => setVillageGeoJson(response.data))
       .catch((error) =>
         console.error("Error fetching output_village.geojson:", error)
       );
 
     axios
-      .get("http://127.0.0.1:5000/static/map_data.geojson")
+      .get("https://jaipur-district-geostats-backend.onrender.com/static/map_data.geojson")
       .then((response) => setDistrictDataGeoJson(response.data))
       .catch((error) =>
         console.error("Error fetching map_data.geojson:", error)
       );
 
     axios
-      .get("http://127.0.0.1:5000/static/response_data.json")
+      .get("https://jaipur-district-geostats-backend.onrender.com/response_data.json")
       .then((response) => setColumnNames(response.data.columns))
       .catch((error) => console.error("Error fetching column names:", error));
   }, []);
 
   useEffect(() => {
     axios
-      .get("http://127.0.0.1:5000/static/plot_output.json")
+      .get("https://jaipur-district-geostats-backend.onrender.com/static/plot_output.json")
       .then((response) => setPlotData(JSON.parse(response.data)))
       .catch((error) => console.error("Error fetching plot data:", error));
   }, []);
@@ -86,7 +86,7 @@ const EdaDashboard = () => {
     event.preventDefault();
     setLoading(true); // Set loading to true on form submission
     try {
-      const response = await axios.post("http://127.0.0.1:5000/generate_plot", {
+      const response = await axios.post("https://jaipur-district-geostats-backend.onrender.com/generate_plot", {
         feature1,
         feature2,
         plot_type: plotType,
